@@ -1,28 +1,122 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import styled from 'styled-components';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faComments } from '@fortawesome/free-regular-svg-icons';
 
+import Articles from 'containers/Articles';
+
+library.add(faAngleRight, faComments, faUser);
+
+const Page = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: 0px;
+  width: 100%;
+`;
+
+const Frame = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: ${props => props.theme.breakPoints.desktop};
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+`;
+
+const Footer = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 30px;
+  width: 100%;
+  background: #999;
+`;
+
+const Logo = styled.div`
+  font-family: ${props => props.theme.fonts.headers};
+  font-size: 2em;
+`;
+
+const IntroContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  position: relative;
+  top: 80px;
+  padding-bottom: 8px;
+`;
+
+const Intro = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const TextBox = styled.div`
+  font-family: ${props => props.theme.fonts.primary};
+  font-size: .9em;
+  line-height: 18px;
+`;
+
+const Title = styled.div`
+  font-family: ${props => props.theme.fonts.headers};
+  font-size: 1.2em;
+  margin-bottom: 16px;
+`;
+
+const Menu = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+`;
+
+const Item = styled.div`
+  font-family: ${props => props.theme.fonts.headers};
+  margin-left: 48px;
+  font-size: .9em;
+  text-align: right;
+`;
+
+const App = () => (
+  <Page>
+    <Frame>
+      <Header>
+        <Logo>pykmi.me</Logo>
+        <FontAwesomeIcon size="2x" icon={['far', 'user']} />
+      </Header>
+      <Router>
+        <div>
+          <IntroContainer>
+            <Intro>
+              <Title>The Great Journey</Title>
+              <TextBox>My work and lesson I have<br />learned on this journey.</TextBox>
+            </Intro>
+            <Menu>
+              <Item>All</Item>
+              <Item>Cloud</Item>
+              <Item>Code</Item>
+              <Item>Projects</Item>
+            </Menu>
+          </IntroContainer>
+          <Switch>
+            <Route exact path="/" component={Articles} />
+          </Switch>
+        </div>
+      </Router>
+    </Frame>
+  </Page>
+);
+ 
 export default App;

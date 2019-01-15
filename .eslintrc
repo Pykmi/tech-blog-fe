@@ -1,0 +1,52 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "settings": {
+        "react": {
+            "version": "16.3.2"
+        }
+    },
+    "rules": {
+        "comma-dangle": [
+            "error", {
+                "arrays": "only-multiline",
+                "objects": "only-multiline",
+                "imports": "never",
+                "exports": "never",
+                "functions": "ignore"
+            }
+        ],
+        "eol-last": ["error", "always"],
+        "indent": ["error", 2, { "SwitchCase": 1 }],
+        "linebreak-style": ["error", "unix"],
+        "max-len": ["error", 150],
+        "no-console": 1,
+        "no-trailing-spaces": ["error", {"skipBlankLines": true}],
+        "no-useless-constructor": "error",
+        "padded-blocks": ["error", "never"],
+        "quotes": ["error", "single"],
+        "react/jsx-filename-extension": ["error", { "extensions": [".js", "jsx"] }],
+        "react/no-array-index-key": 1,
+        "react/no-typos": 1,
+        "semi": ["error", "always"],
+        "space-before-function-paren": ["error", "never"]
+    }
+}
