@@ -1,5 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import * as articleActions from 'actions/article_actions';
 
 import ArticleCompact from 'presentational/ArticleCompact';
 
@@ -13,61 +17,56 @@ const Container = styled.div`
 `;
 
 class Articles extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { articles: [] };
+    this.stateHasArticles = this.stateHasArticles.bind(this);
+  }
+
+  static getDerivedStateFromProps(nextProps) {
+    if(Articles.propsHasArticles(nextProps)) {
+      nextProps.articleActions.fetchAll();
+    }
+
+    return { articles: nextProps.articles };
+  }
+
+  static propsHasArticles = (props) => props.articles.length < 1;
+
+  stateHasArticles = () => this.state.articles.length > 0;
+
   render() {
-    return (
-      <Container>
-        <ArticleCompact
-          author="Tomi Kaistila"
-          category="Cloud"
-          image="cloud.jpg"
-          published="November 1st, 2018"
-          title="Azure Web Apps for Containers"
-        />
-        <ArticleCompact
-          author="Tomi Kaistila"
-          category="Code"
-          image="htmlcode.jpg"
-          published="November 1st, 2018"
-          title="Code Standards"
-        />
-        <ArticleCompact
-          author="Tomi Kaistila"
-          category="Code"
-          image="golang.png"
-          published="November 1st, 2018"
-          title="Read JSON with Go"
-        />{/*
-        <ArticleCompact
-          author="Tomi Kaistila"
-          category="Code"
-          image="nodejs.png"
-          published="November 1st, 2018"
-          title="Building Backends with Node.js"
-        />
-        <ArticleCompact
-          author="Tomi Kaistila"
-          category="Code"
-          image="servers.jpg"
-          published="November 1st, 2018"
-          title="Building Backends with Go"
-        />
-        <ArticleCompact
-          author="Tomi Kaistila"
-          category="Cloud"
-          image="cloud.jpg"
-          published="November 1st, 2018"
-          title="Azure Web Apps for Containers"
-        />
-        <ArticleCompact
-          author="Tomi Kaistila"
-          category="Cloud"
-          image="cloud.jpg"
-          published="November 1st, 2018"
-          title="Azure Web Apps for Containers"
-        /> */}
-      </Container>
+    if(this.stateHasArticles()) {
+      return (
+        <Container>
+          {this.state.articles.map((article) => (
+            <ArticleCompact data={article} key={article._id} />
+          ))}
+        </Container>
+      );
+    }
+    return(
+      <div></div>
     );
   }
 }
+
+Articles.propTypes = {
+  articles: PropTypes.arrayOf(PropTypes.any),
+  articleActions: PropTypes.objectOf(PropTypes.func).isRequired
+};
+
+Articles.defaultProps = {
+  articles: []
+};
+
+const mapDispatchToProps = dispatch => ({
+  articleActions: bindActionCreators(articleActions, dispatch)
+});
+
+const mapStateToProps = state => ({
+  articles: state.articles
+});
  
-export default Articles;
+export default connect(mapStateToProps, mapDispatchToProps)(Articles);

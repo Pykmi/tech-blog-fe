@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
+import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { url } from 'utils';
 
 const Container = styled.div`
   display: flex;
@@ -109,30 +111,26 @@ const FooterIcon = styled.span`
   margin-left: 8px;
 `;
 
-const ArticleCompact = ({ author, published, category, image, title }) => (
+const ArticleCompact = ({ data }) => (
   <Container>
     <Image
-      src={image}
+      src={data.image}
     />
     <Text>
-      <Title>{title}</Title>
+      <Title>{data.title}</Title>
       <Details>
-        <Item>By {author}</Item>
-        <Item>{published}</Item>
-        <Item>Category: {category}</Item>
+        <Item>By {data.author}</Item>
+        <Item>{moment(data.modified_at).format('MMMM Do, YYYY')}</Item>
+        <Item>Category: {data.category}</Item>
       </Details>
-      <Body>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non gravida sapien.
-        Maecenas eget convallis tortor, iaculis mattis ipsum. Praesent a dolor dapibus, hendrerit
-        dolor et, semper arcu.
-      </Body>
+      <Body>{data.smalltext}</Body>
       <Footer>
         <FooterItem>
-          <span>Read More</span>
+          <span><Link to={url('category', data.url)}>Read More</Link></span>
           <FooterIcon><FontAwesomeIcon icon="angle-right" /></FooterIcon>
         </FooterItem>
         <FooterItem>
-          <span>12</span>
+          <span>{data.likes}</span>
           <FooterIcon><FontAwesomeIcon icon={['far', 'comments']} /></FooterIcon>
         </FooterItem>
       </Footer>
@@ -141,11 +139,7 @@ const ArticleCompact = ({ author, published, category, image, title }) => (
 );
 
 ArticleCompact.propTypes = {
-  author: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  published: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired
+  data: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 export default ArticleCompact;
