@@ -1,4 +1,5 @@
 import React from 'react';
+/* import PropTypes from 'prop-types'; */
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -7,7 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faUser, faComments } from '@fortawesome/free-regular-svg-icons';
 
-import Articles from 'containers/Articles';
+import RequireContent from 'hoc/RequireContent.js';
+import AllArticles from 'containers/AllArticles';
 
 library.add(faAngleRight, faComments, faUser);
 
@@ -34,7 +36,7 @@ const Header = styled.div`
   height: 80px;
 `;
 
-const Footer = styled.div`
+/* const Footer = styled.div`
   position: absolute;
   right: 0;
   bottom: 0;
@@ -42,7 +44,7 @@ const Footer = styled.div`
   height: 30px;
   width: 100%;
   background: #999;
-`;
+`; */
 
 const Logo = styled.div`
   font-family: ${props => props.theme.fonts.headers};
@@ -96,25 +98,27 @@ const App = () => (
         <Logo>pykmi.me</Logo>
         <FontAwesomeIcon size="2x" icon={['far', 'user']} />
       </Header>
-      <Router>
-        <div>
-          <IntroContainer>
-            <Intro>
-              <Title>The Great Journey</Title>
-              <TextBox>My work and lesson I have<br />learned on this journey.</TextBox>
-            </Intro>
-            <Menu>
-              <Item>All</Item>
-              <Item>Cloud</Item>
-              <Item>Code</Item>
-              <Item>Projects</Item>
-            </Menu>
-          </IntroContainer>
+      <div>
+        <IntroContainer>
+          <Intro>
+            <Title>The Great Journey</Title>
+            <TextBox>My work and lesson I have<br />learned on this journey.</TextBox>
+          </Intro>
+          <Menu>
+            <Item>All</Item>
+            <Item>Cloud</Item>
+            <Item>Code</Item>
+            <Item>Projects</Item>
+          </Menu>
+        </IntroContainer>
+        <Router>
           <Switch>
-            <Route exact path="/" component={Articles} />
+            <Route exact path="/" component={RequireContent(AllArticles)} />
+            {/* <Route exact path="/" render={() => <AllArticles content={this.props.articles} />} />
+            <Route exact path="/category/:id" render={() => <Category content={this.props.articles} />} /> */}
           </Switch>
-        </div>
-      </Router>
+        </Router>
+      </div>
     </Frame>
   </Page>
 );
