@@ -10,6 +10,7 @@ import { faUser, faComments } from '@fortawesome/free-regular-svg-icons';
 
 import Articles from 'presentational/Articles';
 import Article from 'presentational/Article';
+import Category from 'presentational/Category';
 
 library.add(faAngleRight, faComments, faUser);
 
@@ -115,6 +116,7 @@ const App = () => (
           <Switch>
             <Route exact path="/" component={Articles} />
             <Route path="/article/:name" component={Article} />
+            <Route path="/category/:name" component={Category} />
             {/* <Route exact path="/" render={() => <AllArticles content={this.props.articles} />} />
             <Route exact path="/category/:id" render={() => <Category content={this.props.articles} />} /> */}
           </Switch>
