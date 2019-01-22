@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import withContent from 'hoc/withContent';
+import withRecent from 'hoc/withRecent';
 
 const Container = styled.div`
   display: flex;
@@ -14,12 +14,12 @@ const Container = styled.div`
 
 const Article = (props) => (
   <Container>
-    <div>{props.title}</div>
+    <div>{props.content.title}</div>
   </Container>
 );
 
 Article.propTypes = {
-  title: PropTypes.string.isRequired
+  content: PropTypes.objectOf(PropTypes.any).isRequired
 };
  
-export default withContent(Article);
+export default withRecent(Article);

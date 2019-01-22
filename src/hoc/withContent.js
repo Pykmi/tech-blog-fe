@@ -6,51 +6,42 @@ import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import * as actions from 'actions/content_actions';
 
-const BASE_ROUTE = '/';
-const SINGLE_CONTENT_ROUTE = '/article/:name';
-
 export default (Composed) => {
   class withContent extends React.Component {
     constructor(props) {
       super(props);
 
-      this.state = { articles: [] };
+      this.state = { frontPage: {} };
     }
     
     static getDerivedStateFromProps(nextProps) {
-      if(withContent.propsNeedAll(nextProps)) {
-        nextProps.actions.fetchAll();
-      }
-      
-      if(withContent.propsNeedOne(nextProps)) {
-        console.log('single content');
+      if(withContent.propsNeedContent(nextProps)) {
+        nextProps.actions.fetch();
+        console.log('fetch()');
       }
 
-      console.log(nextProps.content);
-      return { content: nextProps.content };
+      return { frontPage: nextProps.frontPage };
     }
 
-    static propsNeedAll = (props) => Object.keys(props.content).length < 1 && props.match.path === BASE_ROUTE;
-
-    static propsNeedOne = (props) => Object.keys(props.content).length < 1 && props.match.path === SINGLE_CONTENT_ROUTE;
+    static propsNeedContent = (props) => Object.keys(props.frontPage).length < 1;
 
     render() {
-      return <div>{!_.isEmpty(this.props.content) && <Composed content={this.props.content} />}</div>;
+      return <div>{!_.isEmpty(this.props.frontPage) && <Composed content={this.props.frontPage} />}</div>;
     }
   }
 
   withContent.propTypes = {
     actions: PropTypes.objectOf(PropTypes.func).isRequired,
-    content: PropTypes.objectOf(PropTypes.any),
-    history: PropTypes.objectOf(PropTypes.any).isRequired
+    frontPage: PropTypes.objectOf(PropTypes.any),
+    match: PropTypes.objectOf(PropTypes.any).isRequired
   };
 
   withContent.defaultProps = {
-    content: {}
+    frontPage: {}
   };
 
   const mapStateToProps = state => ({
-    content: state.content
+    frontPage: state.frontPage
   });
 
   const mapDispatchToProps = dispatch => ({
