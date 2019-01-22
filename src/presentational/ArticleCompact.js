@@ -126,7 +126,7 @@ const ArticleCompact = ({ data }) => (
       <Body>{data.smalltext}</Body>
       <Footer>
         <FooterItem>
-          <span><Link to={url('category', data.url)}>Read More</Link></span>
+          <span><Link to={url('article', data.url)}>Read More</Link></span>
           <FooterIcon><FontAwesomeIcon icon="angle-right" /></FooterIcon>
         </FooterItem>
         <FooterItem>

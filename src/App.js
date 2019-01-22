@@ -8,8 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faUser, faComments } from '@fortawesome/free-regular-svg-icons';
 
-import RequireContent from 'hoc/RequireContent.js';
-import AllArticles from 'containers/AllArticles';
+import Articles from 'presentational/Articles';
+import Article from 'presentational/Article';
 
 library.add(faAngleRight, faComments, faUser);
 
@@ -113,7 +113,8 @@ const App = () => (
         </IntroContainer>
         <Router>
           <Switch>
-            <Route exact path="/" component={RequireContent(AllArticles)} />
+            <Route exact path="/" component={Articles} />
+            <Route path="/article/:name" component={Article} />
             {/* <Route exact path="/" render={() => <AllArticles content={this.props.articles} />} />
             <Route exact path="/category/:id" render={() => <Category content={this.props.articles} />} /> */}
           </Switch>

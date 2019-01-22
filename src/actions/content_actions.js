@@ -12,7 +12,7 @@ export const fetchAll = () => (dispatch) => {
     .then((res) => {
       dispatch({ type: REST_CALL_SUCCESS });
       if(res.status === 200) {
-        dispatch({ type: FETCH_SUCCESS, articles: res.data });
+        dispatch({ type: FETCH_SUCCESS, content: res.data });
       }
       if(res.status === 204) {
         /* notifier.send(noRecordMessage(), dispatch); */
