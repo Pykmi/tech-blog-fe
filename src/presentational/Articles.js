@@ -16,14 +16,12 @@ const Container = styled.div`
 
 const Articles = (props) => (
   <Container>
-    {props.content.map((article) => (
-      <ArticleCompact data={article} key={article._id} />
-    ))}
+    {Object.keys(props.content).map((url) => <ArticleCompact content={props.content[url]} key={props.content[url]._id} />)}
   </Container>
 );
 
 Articles.propTypes = {
-  content: PropTypes.arrayOf(PropTypes.any).isRequired
+  content: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 export default withContent(Articles);

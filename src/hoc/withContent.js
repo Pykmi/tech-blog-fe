@@ -21,19 +21,18 @@ export default (Composed) => {
       if(withContent.propsNeedAll(nextProps)) {
         nextProps.actions.fetchAll();
       }
-
-      console.log(nextProps.content);
       
       if(withContent.propsNeedOne(nextProps)) {
         console.log('single content');
       }
 
+      console.log(nextProps.content);
       return { content: nextProps.content };
     }
 
-    static propsNeedAll = (props) => props.content.length < 1 && props.match.path === BASE_ROUTE;
+    static propsNeedAll = (props) => Object.keys(props.content).length < 1 && props.match.path === BASE_ROUTE;
 
-    static propsNeedOne = (props) => props.content.length < 1 && props.match.path === SINGLE_CONTENT_ROUTE;
+    static propsNeedOne = (props) => Object.keys(props.content).length < 1 && props.match.path === SINGLE_CONTENT_ROUTE;
 
     render() {
       return <div>{!_.isEmpty(this.props.content) && <Composed content={this.props.content} />}</div>;
@@ -42,12 +41,12 @@ export default (Composed) => {
 
   withContent.propTypes = {
     actions: PropTypes.objectOf(PropTypes.func).isRequired,
-    content: PropTypes.arrayOf(PropTypes.any),
+    content: PropTypes.objectOf(PropTypes.any),
     history: PropTypes.objectOf(PropTypes.any).isRequired
   };
 
   withContent.defaultProps = {
-    content: []
+    content: {}
   };
 
   const mapStateToProps = state => ({
