@@ -111,26 +111,24 @@ const FooterIcon = styled.span`
   margin-left: 8px;
 `;
 
-const ArticleCompact = ({ data }) => (
+const ArticleCompact = ({ content }) => (
   <Container>
-    <Image
-      src={data.image}
-    />
+    <Image src={content.image} />
     <Text>
-      <Title>{data.title}</Title>
+      <Title>{content.title}</Title>
       <Details>
-        <Item>By {data.author}</Item>
-        <Item>{moment(data.modified_at).format('MMMM Do, YYYY')}</Item>
-        <Item>Category: {data.category}</Item>
+        <Item>By {content.author}</Item>
+        <Item>{moment(content.modified_at).format('MMMM Do, YYYY')}</Item>
+        <Item>Category: {content.category}</Item>
       </Details>
-      <Body>{data.smalltext}</Body>
+      <Body>{content.smalltext}</Body>
       <Footer>
         <FooterItem>
-          <span><Link to={url('category', data.url)}>Read More</Link></span>
+          <span><Link to={url('article', content.url)}>Read More</Link></span>
           <FooterIcon><FontAwesomeIcon icon="angle-right" /></FooterIcon>
         </FooterItem>
         <FooterItem>
-          <span>{data.likes}</span>
+          <span>{content.likes}</span>
           <FooterIcon><FontAwesomeIcon icon={['far', 'comments']} /></FooterIcon>
         </FooterItem>
       </Footer>
@@ -139,7 +137,7 @@ const ArticleCompact = ({ data }) => (
 );
 
 ArticleCompact.propTypes = {
-  data: PropTypes.objectOf(PropTypes.any).isRequired
+  content: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 export default ArticleCompact;

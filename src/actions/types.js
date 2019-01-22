@@ -1,4 +1,5 @@
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
+export const FETCH_ONE_SUCCESS = 'FETCH_ONE_SUCCESS';
 
 export const REST_CALL_BEGIN = 'REST_CALL_BEGIN';
 export const REST_CALL_ERROR = 'REST_CALL_ERROR';

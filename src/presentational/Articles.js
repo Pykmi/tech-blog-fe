@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import withContent from 'hoc/withContent';
 import ArticleCompact from 'presentational/ArticleCompact';
 
 const Container = styled.div`
@@ -13,16 +14,14 @@ const Container = styled.div`
   flex-wrap: wrap;
 `;
 
-const AllArticles = (props) => (
+const Articles = (props) => (
   <Container>
-    {props.articles.map((article) => (
-      <ArticleCompact data={article} key={article._id} />
-    ))}
+    {Object.keys(props.content).map((url) => <ArticleCompact content={props.content[url]} key={props.content[url]._id} />)}
   </Container>
 );
 
-AllArticles.propTypes = {
-  articles: PropTypes.arrayOf(PropTypes.any).isRequired
+Articles.propTypes = {
+  content: PropTypes.objectOf(PropTypes.any).isRequired
 };
- 
-export default AllArticles;
+
+export default withContent(Articles);
