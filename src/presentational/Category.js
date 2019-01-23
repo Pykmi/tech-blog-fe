@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import withContent from 'hoc/withContent';
+import withCategory from 'hoc/withCategory';
 import ArticleCompact from 'presentational/ArticleCompact';
 
 const Container = styled.div`
@@ -24,4 +24,4 @@ Articles.propTypes = {
   content: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
-export default withContent(Articles);
+export default withCategory(Articles);

@@ -18,13 +18,13 @@ export default (Composed) => {
       const name = nextProps.match.params.name;
 
       if(withCategory.propsNeedContent(nextProps)) {
-        nextProps.actions.fetchByCategory();
-        console.log('fetchByCategory()');
+        nextProps.actions.fetchByCategory(name);
+        return {};
       }
 
       if(nextProps.category.name !== name) {
         nextProps.actions.fetchByCategory();
-        console.log('fetchByCategory()');
+        return {};
       }
 
       return {
@@ -33,7 +33,7 @@ export default (Composed) => {
       };
     }
 
-    static propsNeedContent = (props) => Object.keys(props.category).length < 1;
+    static propsNeedContent = (props) => Object.keys(props.category.content).length < 1 || props.category.name === '';
 
     render() {
       return <div>{!_.isEmpty(this.props.category) && <Composed category={this.props.category.name} content={this.props.category.content} />}</div>;

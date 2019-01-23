@@ -17,7 +17,6 @@ export default (Composed) => {
     static getDerivedStateFromProps(nextProps) {
       if(withContent.propsNeedContent(nextProps)) {
         nextProps.actions.fetch();
-        console.log('fetch()');
       }
 
       return { frontPage: nextProps.frontPage };

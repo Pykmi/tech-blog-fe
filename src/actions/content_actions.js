@@ -25,14 +25,14 @@ export const fetch = () => (dispatch) => {
     });
 };
 
-export const fetchByCategory = (name) => (dispatch) => {
+export const fetchByCategory = (category) => (dispatch) => {
   dispatch({ type: REST_CALL_BEGIN });
   axios
-    .get(`${API_URL}/blog/category/${name}`)
+    .get(`${API_URL}/blog/category/${category}`)
     .then((res) => {
       dispatch({ type: REST_CALL_SUCCESS });
       if(res.status === 200) {
-        dispatch({ type: FETCH_CATEGORY_SUCCESS, category: name, content: res.data });
+        dispatch({ type: FETCH_CATEGORY_SUCCESS, content: res.data, category });
       }
       if(res.status === 204) {
         /* notifier.send(noRecordMessage(), dispatch); */
