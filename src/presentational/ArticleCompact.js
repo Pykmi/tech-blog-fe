@@ -119,7 +119,7 @@ const ArticleCompact = ({ content }) => (
       <Details>
         <Item>By {content.author}</Item>
         <Item>{moment(content.modified_at).format('MMMM Do, YYYY')}</Item>
-        <Item>Category: {content.category}</Item>
+        <Item>Category: <Link to={url('category', content.category)}>{content.category}</Link></Item>
       </Details>
       <Body>{content.smalltext}</Body>
       <Footer>

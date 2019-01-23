@@ -20,13 +20,11 @@ export default (Composed) => {
       // check if no recent article is in store
       if(withRecent.propsNeedContent(nextProps)) {
         nextProps.actions.fetchOne(name);
-        console.log('fetchOne()');
       }
 
       // check if recent article is not the requested article
       if(nextProps.recent.url !== name) {
         nextProps.actions.fetchOne(name);
-        console.log('fetchOne()');
       }
 
       return { recent: nextProps.recent };
