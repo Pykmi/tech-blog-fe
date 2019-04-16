@@ -28,6 +28,6 @@ export const breakPoints = {
 };
 
 export const fonts = {
-  headers: 'Slabo 27px',
-  primary: 'Questrial'
+  headers: 'Questrial',
+  primary: 'PT Sans'
 };

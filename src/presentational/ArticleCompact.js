@@ -79,7 +79,6 @@ const Item = styled.div`
 const Body = styled.div`
   position: relative;
   top: 12px;
-  font-family: ${props => props.theme.fonts.headers};
   font-size: .8em;
   width: 100%;
   line-height: 20px;
@@ -117,7 +116,6 @@ const ArticleCompact = ({ content }) => (
     <Text>
       <Title>{content.title}</Title>
       <Details>
-        <Item>By {content.author}</Item>
         <Item>{moment(content.modified_at).format('MMMM Do, YYYY')}</Item>
         <Item>Category: <Link to={url('category', content.category)}>{content.category}</Link></Item>
       </Details>

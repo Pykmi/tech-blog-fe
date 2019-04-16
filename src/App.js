@@ -68,7 +68,6 @@ const Intro = styled.div`
 `;
 
 const TextBox = styled.div`
-  font-family: ${props => props.theme.fonts.primary};
   font-size: .9em;
   line-height: 18px;
 `;
