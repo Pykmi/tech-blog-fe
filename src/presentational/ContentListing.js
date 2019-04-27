@@ -12,9 +12,9 @@ const Container = styled.div`
   flex-wrap: wrap;
 `;
 
-const ContentListing = (props) => (
+const ContentListing = ({ content }) => (
   <Container>
-    {Object.keys(props.content).map((url) => <Nugget content={props.content[url]} key={props.content[url]._id} />)}
+    {Object.keys(content).map((url) => <Nugget content={content[url]} key={content[url]._id} />)}
   </Container>
 );
 
