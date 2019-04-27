@@ -2,24 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import _ from 'lodash';
-import { bindActionCreators } from 'redux';
-import * as actions from 'actions/content_actions';
+import NoContent from 'presentational/NoContent';
 
-export default (Composed) => {
+export default (Composed, fetch) => {
   class withContent extends React.Component {
+    constructor() {
+      super();
+
+      this.fetch = fetch;
+    }
+
     componentDidMount() {
       const path = this.props.location.pathname;
-      this.props.actions.fetch(path);
+      const fetch = this.fetch;
+
+      this.props.dispatch(fetch(path));
     }
 
     render() {
-      return <div>{!_.isEmpty(this.props.content) && <Composed content={this.props.content} />}</div>;
+      const { content } = this.props;
+      return content.hasError ? <NoContent /> : <Composed content={content} />;
     }
   }
 
   withContent.propTypes = {
-    actions: PropTypes.objectOf(PropTypes.func).isRequired,
     content: PropTypes.objectOf(PropTypes.any),
     match: PropTypes.objectOf(PropTypes.any).isRequired
   };
@@ -32,9 +38,5 @@ export default (Composed) => {
     content: state.content
   });
 
-  const mapDispatchToProps = dispatch => ({
-    actions: bindActionCreators(actions, dispatch)
-  });
-
-  return connect(mapStateToProps, mapDispatchToProps)(withRouter(withContent));
+  return connect(mapStateToProps)(withRouter(withContent));
 };

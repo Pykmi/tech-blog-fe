@@ -88,21 +88,27 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-size: 16px !important;
   }
+
   *, *:before, *:after {
     box-sizing: inherit;
     margin: 0;
     padding: 0;
   }
+
   body {
     font-family: ${fonts.primary}, Arial, Georgia, Serif;
   }
+
   textarea, input, button {
     font-family: ${fonts.primary}, Arial, Georgia, Serif;
   }
+
   textarea:focus, input:focus, button {
     outline: none;
   }
+
   a {
+    color: #259dff;
     text-decoration: none;
   }
 `;

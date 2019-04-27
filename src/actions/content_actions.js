@@ -2,12 +2,23 @@ import axios from 'axios';
 /* import notifier from 'notifier'; */
 /* import { httpError } from 'errors'; */
 import fetchAllJson from '../mocks/fetchAll.json'
-import { FETCH_SUCCESS, FETCH_CATEGORY_SUCCESS, FETCH_ONE_SUCCESS, REST_CALL_BEGIN, REST_CALL_SUCCESS, REST_CALL_ERROR } from 'actions/types';
+import {
+  FETCH_NOCONTENT,
+  FETCH_ONE_SUCCESS,
+  FETCH_SUCCESS,
+  HTTP_STATUS_404,
+  REST_CALL_BEGIN,
+  REST_CALL_ERROR,
+  REST_CALL_SUCCESS
+} from 'actions/types';
 
 const API_URL = process.env.REACT_APP_MAIN_API_URL;
 
+const noContent = () => ({ hasError: true, statusText: 'No Resource Found', statusCode: 404 });
+
 export const fetch = (path) => (dispatch) => {
   dispatch({ type: REST_CALL_BEGIN });
+  
   axios
     .get(`${API_URL}/blog${path}`)
     .then((res) => {
@@ -22,27 +33,9 @@ export const fetch = (path) => (dispatch) => {
     })
     .catch((error) => {
       dispatch({ type: REST_CALL_ERROR });
-      console.log(error);
-    });
-};
-
-export const fetchByCategory = (category) => (dispatch) => {
-  dispatch({ type: REST_CALL_BEGIN });
-  axios
-    .get(`${API_URL}/blog/category/${category}`)
-    .then((res) => {
-      dispatch({ type: REST_CALL_SUCCESS });
-      if(res.status === 200) {
-        dispatch({ type: FETCH_CATEGORY_SUCCESS, content: res.data, category });
+      if(error.response.status === HTTP_STATUS_404) {
+        dispatch({ type: FETCH_NOCONTENT, content: noContent() });
       }
-      if(res.status === 204) {
-        /* notifier.send(noRecordMessage(), dispatch); */
-        console.log(res);
-      }
-    })
-    .catch((error) => {
-      dispatch({ type: REST_CALL_ERROR });
-      console.log(error);
     });
 };
 
