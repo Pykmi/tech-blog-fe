@@ -1,14 +1,15 @@
 import axios from 'axios';
 /* import notifier from 'notifier'; */
 /* import { httpError } from 'errors'; */
+import fetchAllJson from '../mocks/fetchAll.json'
 import { FETCH_SUCCESS, FETCH_CATEGORY_SUCCESS, FETCH_ONE_SUCCESS, REST_CALL_BEGIN, REST_CALL_SUCCESS, REST_CALL_ERROR } from 'actions/types';
 
 const API_URL = process.env.REACT_APP_MAIN_API_URL;
 
-export const fetch = () => (dispatch) => {
+export const fetch = (path) => (dispatch) => {
   dispatch({ type: REST_CALL_BEGIN });
   axios
-    .get(`${API_URL}/blog`)
+    .get(`${API_URL}/blog${path}`)
     .then((res) => {
       dispatch({ type: REST_CALL_SUCCESS });
       if(res.status === 200) {
@@ -63,4 +64,10 @@ export const fetchOne = (name) => (dispatch) => {
       dispatch({ type: REST_CALL_ERROR });
       console.log(error);
     });
+};
+
+export const fetchMockUp = () => (dispatch) => {
+  dispatch({ type: REST_CALL_BEGIN });
+  dispatch({ type: REST_CALL_SUCCESS });
+  dispatch({ type: FETCH_SUCCESS, content: JSON.parse(JSON.stringify(fetchAllJson)) });
 };

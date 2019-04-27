@@ -8,39 +8,28 @@ import * as actions from 'actions/content_actions';
 
 export default (Composed) => {
   class withContent extends React.Component {
-    constructor(props) {
-      super(props);
-
-      this.state = { frontPage: {} };
+    componentDidMount() {
+      const path = this.props.location.pathname;
+      this.props.actions.fetch(path);
     }
-    
-    static getDerivedStateFromProps(nextProps) {
-      if(withContent.propsNeedContent(nextProps)) {
-        nextProps.actions.fetch();
-      }
-
-      return { frontPage: nextProps.frontPage };
-    }
-
-    static propsNeedContent = (props) => Object.keys(props.frontPage).length < 1;
 
     render() {
-      return <div>{!_.isEmpty(this.props.frontPage) && <Composed content={this.props.frontPage} />}</div>;
+      return <div>{!_.isEmpty(this.props.content) && <Composed content={this.props.content} />}</div>;
     }
   }
 
   withContent.propTypes = {
     actions: PropTypes.objectOf(PropTypes.func).isRequired,
-    frontPage: PropTypes.objectOf(PropTypes.any),
+    content: PropTypes.objectOf(PropTypes.any),
     match: PropTypes.objectOf(PropTypes.any).isRequired
   };
 
   withContent.defaultProps = {
-    frontPage: {}
+    content: {}
   };
 
   const mapStateToProps = state => ({
-    frontPage: state.frontPage
+    content: state.content
   });
 
   const mapDispatchToProps = dispatch => ({

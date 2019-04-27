@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { url } from 'utils';
+import { makeURL } from 'utils';
 
 const Container = styled.div`
   display: flex;
@@ -60,7 +60,6 @@ const Details = styled.div`
 `;
 
 const Item = styled.div`
-  font-family: ${props => props.theme.fonts.headers};
   font-size: .7em;
   border-left: 1px solid ${props => props.theme.colors.gray05};
   padding-left: 8px;
@@ -110,32 +109,35 @@ const FooterIcon = styled.span`
   margin-left: 8px;
 `;
 
-const ArticleCompact = ({ content }) => (
-  <Container>
-    <Image src={content.image} />
-    <Text>
-      <Title>{content.title}</Title>
-      <Details>
-        <Item>{moment(content.modified_at).format('MMMM Do, YYYY')}</Item>
-        <Item>Category: <Link to={url('category', content.category)}>{content.category}</Link></Item>
-      </Details>
-      <Body>{content.smalltext}</Body>
-      <Footer>
-        <FooterItem>
-          <span><Link to={url('article', content.url)}>Read More</Link></span>
-          <FooterIcon><FontAwesomeIcon icon="angle-right" /></FooterIcon>
-        </FooterItem>
-        <FooterItem>
-          <span>{content.likes}</span>
-          <FooterIcon><FontAwesomeIcon icon={['far', 'comments']} /></FooterIcon>
-        </FooterItem>
-      </Footer>
-    </Text>
-  </Container>
-);
+const Nugget = ({ content }) => {
+  const { category, image, modified_at, smalltext, title, url } = content;
 
-ArticleCompact.propTypes = {
+  return (
+    <Container>
+      <Image src={`/${image}`} />
+      <Text>
+        <Title>{title}</Title>
+        <Details>
+          <Item>{moment(modified_at).format('MMMM Do, YYYY')}</Item>
+          <Item>Category: <Link to={makeURL('/category', category)}>{category}</Link></Item>
+        </Details>
+        <Body>{smalltext}</Body>
+        <Footer>
+          <FooterItem>
+            <span><Link to={makeURL('/article', url)}>Read More</Link></span>
+            <FooterIcon><FontAwesomeIcon icon="angle-right" /></FooterIcon>
+          </FooterItem>
+          <FooterItem>
+            
+          </FooterItem>
+        </Footer>
+      </Text>
+    </Container>
+  );
+};
+
+Nugget.propTypes = {
   content: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
-export default ArticleCompact;
+export default Nugget;
