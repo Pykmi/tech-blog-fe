@@ -1,1 +1,1 @@
-export const url = (path, file) => `${path}/${file}`;
+export const makeURL = (path, file) => `${path}/${file}`;
