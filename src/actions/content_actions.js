@@ -1,7 +1,7 @@
 import axios from 'axios';
 /* import notifier from 'notifier'; */
 /* import { httpError } from 'errors'; */
-import fetchAllJson from '../mocks/fetchAll.json'
+import { mockedStore } from '../mocks/fetch.js';
 import {
   FETCH_NOCONTENT,
   FETCH_ONE_SUCCESS,
@@ -18,7 +18,7 @@ const noContent = () => ({ hasError: true, statusText: 'No Resource Found', stat
 
 export const fetch = (path) => (dispatch) => {
   dispatch({ type: REST_CALL_BEGIN });
-  
+
   axios
     .get(`${API_URL}/blog${path}`)
     .then((res) => {
@@ -59,8 +59,22 @@ export const fetchOne = (name) => (dispatch) => {
     });
 };
 
-export const fetchMockUp = () => (dispatch) => {
+export const fetchAllMockUp = () => (dispatch) => {
   dispatch({ type: REST_CALL_BEGIN });
   dispatch({ type: REST_CALL_SUCCESS });
-  dispatch({ type: FETCH_SUCCESS, content: JSON.parse(JSON.stringify(fetchAllJson)) });
+  dispatch({ type: FETCH_SUCCESS, content: mockedStore });
+};
+
+export const fetchOneMockUp = (path, params) => (dispatch) => {
+  dispatch({ type: REST_CALL_BEGIN });
+
+  const content = mockedStore.filter(post => post.url === params.name);
+  if(content.length < 1) {
+    dispatch({ type: REST_CALL_ERROR });
+    dispatch({ type: FETCH_NOCONTENT, content: noContent() });
+    return;
+  }
+
+  dispatch({ type: REST_CALL_SUCCESS });
+  dispatch({ type: FETCH_SUCCESS, content });
 };

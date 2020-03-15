@@ -14,12 +14,12 @@ const Container = styled.div`
 
 const ContentListing = ({ content }) => (
   <Container>
-    {Object.keys(content).map((url) => <Nugget content={content[url]} key={content[url]._id} />)}
+    {content.map((post) => <Nugget content={post} key={post._id} />)}
   </Container>
 );
 
 ContentListing.propTypes = {
-  content: PropTypes.objectOf(PropTypes.any).isRequired
+  content: PropTypes.array.isRequired
 };
 
 export default ContentListing;

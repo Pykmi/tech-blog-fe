@@ -8,7 +8,7 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faUser, faComments } from '@fortawesome/free-regular-svg-icons';
 
 import Header from 'presentational/Header';
-import { BodyRouter } from 'routes'
+import { BodyRouter } from 'routes';
 
 library.add(faAngleRight, faComments, faUser);
 

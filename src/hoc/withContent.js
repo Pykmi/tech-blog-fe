@@ -6,17 +6,17 @@ import NoContent from 'presentational/NoContent';
 
 export default (Composed, fetch) => {
   class withContent extends React.Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
 
       this.fetch = fetch;
     }
 
     componentDidMount() {
-      const path = this.props.location.pathname;
+      const { location, match } = this.props;
       const fetch = this.fetch;
 
-      this.props.dispatch(fetch(path));
+      this.props.dispatch(fetch(location.pathname, match.params));
     }
 
     render() {
@@ -26,12 +26,14 @@ export default (Composed, fetch) => {
   }
 
   withContent.propTypes = {
-    content: PropTypes.objectOf(PropTypes.any),
+    content: PropTypes.array,
+    dispatch: PropTypes.func.isRequired,
+    location: PropTypes.objectOf(PropTypes.any).isRequired,
     match: PropTypes.objectOf(PropTypes.any).isRequired
   };
 
   withContent.defaultProps = {
-    content: {}
+    content: []
   };
 
   const mapStateToProps = state => ({
